@@ -1,0 +1,112 @@
+body {
+box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: white;
+  background-color: #2b1e5b;
+}
+
+.navbar {
+    font-family: "Pixelify Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;  
+
+    background-color: #120a24;
+    min-height: 80px;
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    justify-content: space-around;
+    align-items: center;
+    font-weight: bolder;
+  /*padding: 15px 20px;*/
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  
+}
+
+.logo img {
+  width: 32px;
+  height: 32px;
+  border-radius: 5px;
+}
+
+.navbar a{
+    color: #f2fcfc;
+    text-decoration: none;
+}
+
+.nav-tabs a:hover{
+    border-bottom: 2px #91c9ee solid;
+    color: #91c9ee;
+}
+
+.logo a {
+  font-size: 30px;
+}
+
+.nav-tabs a {
+  margin: 30px;
+  font-size: 15px;
+}
+
+.buttons {
+  font-family: "Pixelify Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;  
+
+  background-color: #ffd942;
+  color: #120a24;
+  text-decoration: none; 
+  border: none;
+  
+  border-radius: 12px;
+  box-shadow: 0 9px #856f12;
+  cursor: pointer;
+  transition: transform 0.2s;
+  display: inline-block;
+  
+  text-align: center;
+}
+
+.buttons:hover {
+  
+  background-color: #ffe374;
+  /*box-shadow: 0 10px #a28916;*/
+}
+
+.buttons:active {
+  background-color: #ffe374;
+  box-shadow: 0 5px #483d09;
+  transform: translateY(4px);
+  /*transform: scale(1.05);*/
+}
+
+
+.title {
+  font-family: "Pixelify Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+
+}
+.title h1{
+   background: linear-gradient(to bottom, #fef9dc,#fbde66,#fad333);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.description {
+  font-family: sans-serif;
+  color: #f2f2f2;
+}

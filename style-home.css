@@ -1,0 +1,129 @@
+
+
+/*.context {
+    display: flex;
+    min-height: 100vh;
+    
+    position: relative;
+    
+   
+    background: url('/homepage-bg.png') no-repeat center bottom;
+    background-size: cover;
+    background-color: #4a1a7c;
+    /*padding: 180px;
+     min-height: 900px;
+    */
+    /*overflow: hidden;
+    image-rendering: pixelated;
+    padding: 4rem 2rem;
+
+    
+}*/
+
+
+
+.context {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: url('/homepage-bg.png') no-repeat center bottom;
+  background-size: cover;
+  background-color: #4a1a7c;
+  overflow: hidden;
+  image-rendering: pixelated;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+
+/*.context::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: linear-gradient(to bottom, transparent, #05023e);
+}*/
+
+
+
+.context-desp{
+    text-align: center;
+    padding: 50px;
+}
+
+.intro {
+  font-size: 20px;
+  color: #000;
+  font-family: sans-serif;
+  font-weight: bold;
+  color: #1e113c;
+  margin: 0 0 25px;
+
+}
+
+.title{
+  font-size: 60px;
+}
+
+.title h1{
+  margin: -30px;
+}
+
+.description {
+  font-size: 20px;
+}
+
+/*.buttons{
+  background-color: #ffd93d;
+  border: none;
+  font-size: 20px;
+  padding: 15px 100px;
+  border-radius: 12px;
+  box-shadow: 0 0 8px #000;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.buttons:hover {
+  transform: scale(1.05);
+  background-color: #fbe9a3;
+}*/
+
+
+.context-sec{
+  padding: 20px 0 0 0px;
+  background-color: #2b1e5b;
+  text-align: center;
+  background: url(/homp-bg2.png) no-repeat center;
+  background-size: cover ;
+  min-height: 54vh;
+  justify-content: center;
+}
+
+.context-sec p{
+  font-size: 15px;
+  margin-top: 5px;
+  margin-bottom: 40px;
+}
+.context-sec a{
+  font-size: 20px;
+  text-decoration: none;
+  color: #fff;
+}
+
+.context-sec a:hover{
+  color: #19f968;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+.buttons {
+  font-size: 26px;
+  padding: 10px 130px ;
+}
+

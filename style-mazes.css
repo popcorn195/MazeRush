@@ -1,0 +1,108 @@
+html {
+  scroll-behavior: smooth;
+}
+
+.context-main {
+    flex-direction: column;
+  height: 90vh;
+  background: url('/mazes-bg.png') no-repeat center center fixed;
+  background-size: cover;
+  background-color: #4a1a7c;
+  overflow: hidden;
+  image-rendering: pixelated;
+  text-align: center;
+  background-attachment: scroll;
+}
+
+.buttons{
+    font-size: 20px;
+    margin: 10px;
+}
+
+.title{
+    font-size: 70px;
+    padding:0px;
+    margin: 0px;
+}
+.context .description{
+    margin: -80px;
+}
+
+
+
+.context-main,.context-sub{
+    text-align: center;
+    align-items: center;
+}
+
+.context-sub{
+    
+
+    height: 100vh;
+  background: url('/maze-bg2.png') no-repeat center center fixed;
+  background-size: cover;
+  background-color: #4a1a7c;
+  overflow: hidden;
+  image-rendering: pixelated;
+  text-align: center;
+}
+
+.sub1{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 200px;
+}
+
+.sub2{
+    margin: -170px;
+}
+
+.buttons-icon{
+    padding: 10px 30px;
+    font-family: "Pixelify Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;  
+
+  background-color: #220B5A;
+  color: #fff;
+  text-decoration: none; 
+  border: 2px solid #220b5a;
+  
+  border-radius: 12px;
+  box-shadow: 0 9px #17083d;
+  text-align: center;
+}
+
+.context3 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+}
+
+
+.scroll-down {
+  display: inline-block;
+  margin-top: 2rem;
+  font-size: 2rem;
+  color: #ffd93d;
+  animation: bounce 1.5s infinite;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.scroll-down:hover {
+  transform: translateY(5px);
+}
+
+/* Bouncy animation */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+}

@@ -1,0 +1,11 @@
+.context{
+    flex-direction: column;
+  height: 88vh;
+  background: url('/gensolve-bg.png') no-repeat center center fixed;
+  background-size: cover;
+  background-color: #4a1a7c;
+  overflow: hidden;
+  image-rendering: pixelated;
+  text-align: center;
+  background-attachment: scroll;
+}
