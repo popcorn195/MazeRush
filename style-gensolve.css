@@ -1,11 +1,181 @@
-.context{
-    flex-direction: column;
-  height: 88vh;
-  background: url('/gensolve-bg.png') no-repeat center center fixed;
-  background-size: cover;
-  background-color: #4a1a7c;
-  overflow: hidden;
-  image-rendering: pixelated;
+
+
+#controls {
+    text-align: center;
+      margin-top: 20px;
+      gap: 10px;
+      align-items: center;
+      font-size: 16px;
+}
+#controls input{
+    border-radius: 5px;
+    background-color: #1E113C;
+    color: white;
+}
+
+.controls-labels{
+  background-color: #220B5A;
+  border-radius: 5px;
+  padding: 30px 15px;
+}
+
+.controls2{
   text-align: center;
-  background-attachment: scroll;
+      margin-top: 20px;
+      align-items: center;
+}
+
+.cont2-labels{
+  background-color: #220B5A;
+  border-radius: 5px;
+  padding: 20px 35px;
+  font-size: 16px;
+}
+
+    
+    .buttons{
+        font-size: 20px;
+        margin-bottom: 40px;
+    }
+    
+    button:disabled {
+      background-color: #856f12;
+      cursor: not-allowed;
+    }
+    
+    button:hover:not(:disabled) {
+      background-color: #ffe374;
+    }
+    
+    select {
+      font-size: 16px;
+      border: 1px solid #220B5A;
+      background-color: #220B5A;
+      color: white;
+      text-align: center;
+      border-radius: 5px;
+    }
+
+    .labels{
+       text-align: center;
+       font-size: 20px;
+      /*text-decoration: underline;
+      /border: 1px solid #220B5A;
+      background-color: #220B5A;
+      color: white;*/
+      margin: 5px;
+
+      font-family: "Pixelify Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;  
+
+    }
+    
+    #canvas-container {
+      border: 5px solid #220B5A;
+      border-radius: 5px;
+      background-color: #ffffff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .info {
+      margin-top: 20px;
+      max-width: 600px;
+      line-height: 1.5;
+      background-color: #37417a;
+      padding: 15px;
+      border-radius: 5px;
+      border-left: 5px solid #4CAF50;
+    }
+
+.context{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding-top: 40px;
+}
+
+body{
+    background: url(/media/gensolve-bg.png) no-repeat center center fixed;
+    background-size: contain;
+    background-color: #2E1B5B;
+    image-rendering: pixelated;
+}
+
+
+#canvas-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+#heart-end, #heart-start {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+}
+
+#heart-start {
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+}
+
+#heart-end {
+  bottom: 0;
+  right: 0;
+  transform: translate(50%, 50%);
+}
+
+#pauseBtn{
+  background: rgb(190, 239, 247) ;
+  box-shadow: 0 9px rgb(113, 176, 185);
+}
+#pauseBtn:active {
+  background: rgb(164, 209, 216);
+  box-shadow: 0 9px rgb(78, 120, 127);
+  transform: translateY(4px);
+}
+
+#speedUpBtn{
+  background-color: rgb(160, 243, 160);
+  box-shadow: 0 9px rgb(103, 193, 103);
+}
+#speedUpBtn:active {
+  background-color: rgb(140, 214, 140);
+  box-shadow: 0 9px rgb(74, 139, 74);
+  transform: translateY(4px);
+}
+
+#speedDownBtn{
+  background-color: rgb(237, 156, 156);
+  box-shadow: 0 9px rgb(197, 103, 103);
+}
+#speedDownBtn:active {
+  background-color: rgb(201, 132, 132);
+  box-shadow: 0 9px rgb(172, 87, 87);
+  transform: translateY(4px);
+}
+
+button{
+
+  text-decoration: none; 
+  border: none;
+  
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  display: inline-block;
+  
+  text-align: center;
+}
+
+button:hover{
+  cursor: pointer;
+}
+
+#maze-info{
+  background-color: #220B5A;
+  padding: 20px;
+  border-radius: 12px;
 }

@@ -1,0 +1,99 @@
+body {
+  margin: 0;
+  padding: 80px 20px;
+  background: url('/media/genbgedit.jpg') center/cover fixed no-repeat;
+  color: #f1cdb8;
+  font-family: 'Pixelify Sans',sans-serif;
+  font-weight: bold;
+  font-size: 10px;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  scroll-behavior: smooth;
+}
+
+
+pre code,
+code,
+pre[class*="language-"] {
+  font-size: 16px !important;
+  font-family: bold'Courier New', monospace !important;
+  line-height: 1.4 ;
+  background-color: #0f0401 ;
+  padding: 15px;
+  border-radius: 8px ;
+  overflow-x: auto;
+}
+
+#navbar {
+  position: fixed;
+  top: 5px;
+  display: flex;
+  background: rgba(28, 70, 1, 0.805);
+  padding: 10px 10px;
+  border-radius: 10px;
+  border: solid rgb(242, 227, 227);
+  width: 1000px;
+}
+
+#navbar a {
+  color: #f0e9e6;
+  margin:auto;
+  justify-content: space-evenly;
+  align-content: center;
+  padding:4px 8px;
+  font-size: 20px;
+  font-family:'Pixelify Sans';
+}
+
+
+/* Algorithm Sections */
+.algo-section {
+  background: rgba(10, 45, 2, 0.777);
+  border: 10px solid #0f0f0f;
+  border-radius: 12px;
+  padding: 10px;
+  font-size: 20px;
+  margin: 1px auto 100px;
+  width: 1000px;
+  box-shadow: 0 0 100px #edac06;
+}
+
+.algo-section h2 {
+  margin-top: 0;
+  font-size: 35px;
+  text-decoration: underline;
+  font-family: 'Press Start 2P', monospace;
+  padding-bottom: 10px;
+  color: #f5ae0a;
+  
+}
+
+.algo-section h4 {
+  margin-bottom: 1px;
+  font-size: 35px;
+  font-family: 'Pixelify Sans';
+  padding-bottom: 1px;
+  color: #e57308;
+  text-decoration: underline;
+  
+}
+
+.algo-section h3 {
+  margin-top: 10px;
+  font-size: 22px;
+  text-decoration: underline;
+  color: #f9ea5d;
+}
+
+.algo-section pre {
+  background: #111;
+  padding: 20px;
+  border-radius: 8px;
+  border: solid#faf6f6;
+  overflow-x: auto;
+  height: 300px;
+  width: 800px;
+}
+

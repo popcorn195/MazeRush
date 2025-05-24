@@ -1,0 +1,108 @@
+/* Body & Background */
+body {
+  margin: 0;
+  padding: 80px 20px;
+  background: url('/media/gamebg.png') center/cover fixed no-repeat;
+  color: #252725;
+  font-family: 'Pixelify Sans',sans-serif;
+  font-weight: bold;
+  font-size: 10px;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  scroll-behavior: smooth;
+}
+
+#code {
+  background-color: #0f0f0f;
+  color: #e6ece4; 
+  
+  padding: 10px;
+}
+
+pre code,
+code,
+pre[class*="language-"] {
+  font-size: 16px !important;
+  font-family: bold'Courier New', monospace !important;
+  line-height: 1.4 ;
+  background-color: #210125 ;
+  padding: 15px;
+  border-radius: 8px ;
+  overflow-x: auto;
+}
+
+#navbar {
+  position: fixed;
+  top: 5px;
+  display: flex;
+  background: rgba(47, 2, 55, 0.61);
+  padding: 10px 10px;
+  border-radius: 10px;
+  border: solid rgb(246, 243, 243);
+  width: 1000px;
+}
+
+#navbar a {
+  color: #ffffff;
+  margin:auto;
+  justify-content: space-evenly;
+  align-content: center;
+  padding:4px 8px;
+  font-size: 20px;
+  font-family:'Pixelify Sans';
+}
+#navbar a:hover {
+  color: #fff;
+}
+
+/* Algorithm Sections */
+.algo-section {
+  background: rgba(235, 200, 247, 0.764);
+  border: 10px solid #080808;
+  border-radius: 12px;
+  padding: 10px;
+  font-size: 20px;
+  margin: 1px auto 100px;
+  width: 1000px;
+  box-shadow: 0 0 50px #edf2ec;
+}
+
+.algo-section h2 {
+  margin-top: 0;
+  font-size: 35px;
+  text-decoration: underline;
+  font-family: 'Press Start 2P', monospace;
+  padding-bottom: 10px;
+  color: #380139;
+  
+}
+
+.algo-section h4 {
+  margin-bottom: 1px;
+  font-size: 35px;
+  font-family: 'Pixelify Sans';
+  padding-bottom: 1px;
+  color: #6f0441;
+  text-decoration: underline;
+  
+}
+
+.algo-section h3 {
+  margin-top: 10px;
+  font-size: 22px;
+  text-decoration: underline;
+  color: #cf0447;
+}
+
+.algo-section pre {
+  background: #111;
+  padding: 20px;
+  border-radius: 8px;
+  border: solid#faf6f6;
+  overflow-x: auto;
+  height: 300px;
+  width: 800px;
+}
+

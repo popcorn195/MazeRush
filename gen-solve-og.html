@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style-common.css">
+    <link rel="stylesheet" href="style-gensolve.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+    <title>MazeAlgorithms</title>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">
+            <img src="/media/logo.png" alt="">
+            <a href="index.html">MazeRush</a>
+        </div>
+
+        <div class="nav-tabs">
+            <a href="learn.html">✧Learn</a>
+            <a href="mazes.html" style="text-decoration: underline 2px #91C9EE solid; color: #91C9EE;  ;">✧Mazes</a>
+            <a href="race.html">✧Race</a>
+            <a href="game.html">✧Game</a>
+        </div>
+    </header>
+
+    <div class="context">
+        <div class="con1">
+            <button id="generateBtn" class="buttons" style="padding: 10px 60px;">Generate !</button>
+                <br>
+                <div class="labels" style="padding: 10px 0px;">Generation Algorithms:</div>
+                <select id="algoSelect" style="padding: 10px 40px;">
+                    <option value="eller">Eller's Algorithm</option>
+                    <option value="recdiv">Recursive Division</option>
+                    <option value="prim">Prim's Algorithm</option>
+                    <option value="dfs">Depth-First Search</option>
+                    <option value="kruskal">Kruskal's Algorithm</option>
+                </select>
+
+            <div id="controls">
+                <div class="labels" style="margin-top: 50px;">Enter Size:</div> 
+                <div class="controls-labels">
+                    <label for="mazeWidth">Maze Width (px): </label>
+                    <input type="number" id="mazeWidth" value="400" min="100" max="1000"><br>
+
+                    <label for="mazeHeight">Maze Height (px): </label>
+                    <input type="number" id="mazeHeight" value="400" min="100" max="1000">
+                </div>
+            </div>
+        </div>
+
+        <div class="con2">
+            <div id="canvas-wrapper">
+                <img src="/media/heart-start.png" id="heart-start" alt="">
+                <div id="canvas-container"></div>
+                <img src="/media/heart-end.png" id="heart-end" alt="" >
+            </div>
+            
+            <div id="maze-info" style="margin-top: 10px;"></div>
+
+             <div class="info">
+                
+            </div>
+            
+        </div>
+
+        <div class="con3">
+            <button id="solveBtn" disabled class="buttons" style="padding: 10px 90px;">Solve !</button>
+                <br>
+                <div class="labels" style="padding: 10px 12px;">Solving Algorithms:</div>
+                <select id="solverSelect" style="padding: 10px 35px;">
+                    <option value="deadend">Dead-End Filling</option>
+                    <option value="astar">A*</option>
+                    <option value="greedy">Greedy BFS</option>
+                    <option value="dijkstra">Dijkstra's</option>
+                    <option value="bfs">Breadth-First Search</option>
+                    <option value="dfs">Depth-First Search</option>
+                    <option value="wallfollower">Wall Follower</option>
+                </select>
+                
+                <div class="controls2">
+                    <div class="labels" style="margin-top: 50px;">Controls:</div>
+                    <div class="cont2-labels">
+                        <button id="pauseBtn" style="padding: 5px 30px;">Pause</button> <br><br>
+                        <button id="speedUpBtn" style="padding: 5px 20px;">Speed Up</button> <br> <br>
+                        <button id="speedDownBtn" style="padding: 5px 12px;">Speed Down</button>
+                        <div id="status" style="color: white; margin-top: 5px;"></div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <script type="module" src="main.js"></script>
+
+</body>
+</html>

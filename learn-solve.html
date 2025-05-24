@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Learn Maze-Solving Algorithms</title>
+  <link rel="stylesheet" href="style-learn-solve.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav id="navbar">
+    <a href="#bfs">BFS</a>
+    <a href="#dfs">DFS</a>
+    <a href="#def">Dead End Filling</a>
+    <a href="#astar">A*</a>
+    <a href="#dijkstras">Dijkstra's</a>
+    <a href="#greedybfs">Greedy BFS</a>
+    <a href="#wallfollower">Wall Follower</a>
+  </nav>
+
+  <!-- BFS Section -->
+  <section class="algo-section" id="bfs">
+    <h2>BFS (Breadth-First Search)</h2>
+    
+    <h4>Working : </h4>
+    <p>⭐Explores all neighbors at the current depth before going deeper</p>
+    <p>⭐Guarantees the shortest path in unweighted grids.</p>
+    <p>⭐Uses a queue (FIFO) to manage the nodes to visit.</p>
+    <p>⭐Best for unweighted graphs — finds the shortest path in terms of the number of edges.</p>
+
+    <h3>Initialization:</h3>Enqueue the given source vertex into a queue and mark it as visited.</p>
+    <h3>Exploration: </h3>While the queue is not empty:</p>
+    <p>&rArr;Dequeue a node from the queue and visit it (e.g., print its value).</p>
+     <p>&rAarr;For each unvisited neighbor of the dequeued node:</p>
+    <p>&rAarr;Enqueue the neighbor into the queue.</p>
+    <p>&rAarr;Mark the neighbor as visited.</p>
+    <h3>Termination: </h3>
+    Repeat step 2 until the queue is empty.
+    <h4>Time Complexity:</h4>
+    </p> O(V + E)</p>
+    <h4>Space Complexity: </h4>
+    <p>O(V)</p>
+    
+    <h4>Code:</h4>
+    <pre><code id="bfs-code" class="language-javascript">Loading BFS code…</code></pre>
+  </section>
+
+  
+  <!-- DFS Section -->
+  <section class="algo-section" id="dfs">
+    <h2>DFS (Depth-First Search)</h2>
+    
+    <h4>Working : </h4>
+
+    <p>⭐ Explores as deep as possible along each branch before backtracking.</p>
+    <p>⭐ Uses a stack (LIFO) or recursion to manage the traversal.</p>
+    <p>⭐ Does not guarantee the shortest path.</p>
+    <p>Initialize an empty stack, and push node 0 into it.<br>
+     &rAarr;Pop a vertex, mark it as visited only if not already visited.<br>
+     &rAarr;Add the visited vertex to the result collection.<br>
+     &rAarr;Push all unvisited adjacent vertices to the stack in reverse order</p> 
+    
+     <h4>Time Complexity:</h4>
+    </p> O(V + E)</p>
+    <h4>Space Complexity: </h4>
+    <p>O(V)</p>
+
+    <h4>Code:</h4>
+    <pre><code id="dfs-code" class="language-javascript">Loading DFS code…</code></pre>
+  </section>
+
+
+
+
+ <!-- Dead end filling Section -->
+  <section class="algo-section" id="def">
+    <h2>Dead End Filling</h2>
+
+
+    <h4><u>Working : </u></h4>
+    <p>⭐ Identifies and fills all dead-end paths in the maze except the correct path to the exit.</p>
+    <p>⭐ Iteratively removes paths that lead to dead ends by blocking vertices with only one open edge (neighbor).</p>
+    <p>⭐ Continues until only the solution path from start to finish remains.</p>
+    <p>⭐ Simple and effective for maze solving, especially in perfect mazes without loops.</p>
+   
+     <h3> Identify Dead Ends:</h3>
+     A cell in a maze is considered a dead end if it has three or more walls surrounding it, meaning it only has one way out.
+     <h3> Fill Dead Ends:</h3>
+      The algorithm starts at a dead end and "fills" in the path from that dead end until it reaches a junction (a point where two or more paths meet).
+    <h3>Repeat:</h3>
+    <p>This process is repeated until all dead ends are filled, leaving only the valid paths in the maze.</p>
+    <h4>Time Complexity:</h4>
+     O(V + E)
+     <h4>Space Complexity:</h4> O(1)
+
+    <h4>Code:</h4>
+    <pre><code id="def-code" class="language-javascript">Loading Dead End fillingcode…</code></pre>
+  </section>
+
+
+
+
+  <!-- dijkstra's Section -->
+  <section class="algo-section" id="dijkstras">
+    <h2>DIJKSTRA'S</h2>
+
+
+    <h4>Working : </h4>
+    <p>⭐ Finds the shortest path in graphs with non-negative weights.</p>
+    <p>⭐ Uses a priority queue to always pick the node with the smallest tentative distance.</p>
+    <p>⭐ Relaxes neighbors if a shorter path is found through the current node.</p>
+    
+    <p>1. Mark the source node with a current distance of 0 and the rest with infinity.<br>
+       2. Set the non-visited node with the smallest current distance as the current node.
+    <br>3. For each neighbor, N of the current node adds the current distance of the adjacent node with the weight of the edge connecting 0->1. If it is smaller than the current distance of Node, set it as the new current distance of N.
+    <br>4. Mark the current node 1 as visited.
+    <br>5. Go to step 2 if there are any nodes are unvisited.</p>
+
+    <h4>Time Complexity:</h4>
+    <p> O((V + E) log V)</p>
+    <h4>Space Complexity:</h4>
+    <p> O(V)</p>
+    
+    
+    <h4>Code:</h4>
+    <pre><code id="dijkstras-code" class="language-javascript">Loading Dijkstra's code…</code></pre>
+  </section>
+
+
+
+
+  <!-- A* Section -->
+  <section class="algo-section" id="astar">
+    <h2>A* Search</h2>
+    
+    <h4>Working:</h4>
+    <p>⭐ Extension of Dijkstra’s algorithm with a heuristic to guide the search.</p>
+    <p>⭐ Uses f(n) = g(n) + h(n), where:</p>
+    <p>  g(n) = cost from start to 'n' <br>
+       h(n) = estimated cost from n to goal.</p>
+    <p>⭐ Prioritizes nodes with the lowest estimated total cost.</p>
+
+    <h3>Initialization:-</h3>
+      <p>Start by adding the initial node to the open set with its f(n).</p>
+    <h3>Loop:- </h3>
+    <p>While the open set is not empty, the node with the lowest f(n) value is removed from the queue.</p>
+    <h3>Goal check:- </h3>
+    <p>If this node is the goal, the algorithm terminates and returns the discovered path.</p>
+    <h3>Node expansion:- </h3>
+    <p>Otherwise, expand the node (find all its neighbors), calculating g, h, and f values for each neighbor. Add each neighbor to the open set if it's not already present, or if a better path to this neighbor is found.</p>
+    <h3>Repeat:-</h3>
+    <p> The loop repeats until the goal is reached or if there are no more nodes in the open set, indicating no available path.</p>
+
+    <h4>Time Complexity:</h4>
+      <p> O((V + E) log V)</p>
+    <h4>Space Complexity:</h4>
+    <p>O(V)</p>
+    
+    <h4>Code:</h4>
+    <pre><code id="astar-code" class="language-javascript">Loading A* code…</code></pre>
+  </section>
+
+
+
+  <!-- Greedy BFS Section -->
+  <section class="algo-section" id="greedybfs">
+    <h2>Greedy BFS</h2>
+    
+    <h4>Working:</h4>
+    <p>⭐ Uses only the heuristic function h(n) to choose the next node.</p>
+    <p>⭐ Fast but not guaranteed to find the shortest path.</p>
+    <p>⭐ Prioritizes nodes that appear closer to the goal, regardless of actual cost so far.</p>
+    
+    <h3>Initialize:</h3>
+    <p>Start from an initial node (often the root or starting point). Add this node to a priority queue.</p>
+    <h3>Expand Nodes:</h3> 
+    <p>Evaluate all neighboring nodes of the current node. Assign each node a value based on a heuristic function, typically representing the estimated distance to the goal.</p>
+    <h3>Select Best Node: </h3>
+    <p>From the priority queue, select the node with the lowest heuristic value (the node that appears closest to the goal).</p>
+    <h3>Goal Check:</h3> 
+    <p>If the selected node is the goal, terminate the search.</p>
+    <h3>Continue: </h3>
+    <p>If not, repeat steps 2 to 4 for the next node until the goal is reached or the queue is empty.</p>
+    
+    
+    <h4>Time Complexity:</h4>
+    <p>O((V + E) log V)</p>
+    <h4>Space Complexity:</h4> 
+    <p>O(V)</p>
+   
+    <h4>Code:</h4>
+    <pre><code id="greedybfs-code" class="language-javascript">Loading Greedy BFS code…</code></pre>
+  </section>
+
+
+
+  <!--Wall Follower-->
+  <section class="algo-section" id="wallfollower">
+    <h2>Wall Follower</h2>
+    
+    <h4>Working : </h4>
+   
+    <p>⭐ Follows either the right or left wall of the maze continuously until the exit is found.</p>
+    <p>⭐ Works only in mazes where all walls are connected to the outer boundary (i.e., simply-connected mazes).</p>
+    <p>⭐ May go in loops in mazes with islands or disconnected sections.</p>
+    <p>⭐ Very simple and requires minimal memory — good for physical robots or basic maze solving.</p>
+    
+    <h3>Right Hand Rule</h3>
+    <p>Start at the starting point, facing a direction (e.g., right).
+    <br>At each step:
+    <br>Can you turn right and move? → Do it.
+    <br>Else, can you move straight? → Do it.
+    <br>Else, can you turn left and move? → Do it.
+    <br>Else, turn around.
+    <br>Repeat until you reach the goal.</p>
+
+
+    <h4>Time Complexity:</h4>
+      <p>O(V) in worst-case traversal of the entire maze.</p>
+    <h4>Space Complexity:</h4>
+    <p>O(1) — uses only constant space (just current position and direction).</p>
+    
+    <h4>Code:</h4>
+    <pre><code id="wallfollower-code" class="language-javascript">Loading Wall Follower code…</code></pre>
+  </section>
+
+
+
+
+  <!-- Scripts for fetching and syntax highlighting -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-javascript.min.js"></script>
+
+  <script>
+    const algos = [
+      { id: 'bfs', file: 'universalBFS.js' },
+      { id: 'dfs', file: 'universalDFS.js' },
+      { id: 'def', file: 'universalDeadEndFilling.js' },
+      { id: 'dijkstras', file: 'universalDijkstra.js' },
+      { id: 'astar', file: 'universalAStar.js' },
+      { id: 'greedybfs', file: 'universalGreedyBFS.js' },
+      { id: 'wallfollower', file: 'universalWallFollower.js' },
+    ];
+
+    algos.forEach(({ id, file }) => {
+      fetch(file)
+        .then(response => response.text())
+        .then(code => {
+          const codeElem = document.getElementById(id + '-code');
+          if (codeElem) {
+            codeElem.textContent = code;
+            Prism.highlightElement(codeElem);
+          }
+        })
+        .catch(() => {
+          const codeElem = document.getElementById(id + '-code');
+          if (codeElem) {
+            codeElem.textContent = 'Failed to load ' + file;
+          }
+        });
+    });
+  </script>
+
+</body>
+</html>

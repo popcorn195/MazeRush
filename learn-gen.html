@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Learn Maze-Generation Algorithms</title>
+  <link rel="stylesheet" href="style-learn-gen.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav id="navbar">
+    <a href="#krus">Kruskal's</a>
+    <a href="#dfs">DFS</a>
+    <a href="#prims">Prim's</a>
+    <a href="#rdiv">Recursive Division</a>
+    <a href="#eller">Eller's</a>
+  </nav>
+
+  <!-- kruskal Section -->
+  <section class="algo-section" id="krus">
+    <h2>Kruskal's Algorithm</h2>
+    
+    <h4>Working : </h4>
+    <p>⭐Treats every cell as a disjoint set and all walls as edges between them</p>
+    <p>⭐ Randomly sorts walls and processes each one.</p>
+    <p>⭐Removes a wall only if it connects two cells in different sets (avoiding cycles).</p>
+    <p>⭐Uses Union-Find (Disjoint Set Union) data structure for efficient set merging.</p>
+
+    <h3>Initialization:</h3>
+    ->Treat every cell as a node in a graph.
+    <br>->All walls are edges. Initially, all walls are intact.
+    <br>->Each cell is in its own disjoint set.
+
+    <h3>Create list of all walls: </h3>
+    For each wall between two adjacent cells, store it as an edge between two nodes.
+   
+    <h3>Shuffle the wall list randomly: </h3>
+    This adds randomness to the maze.
+
+
+    <h3>Iterate Through Walls:</h3>
+    For each wall between cell A and B:
+    <br>->If A and B are in different sets:
+      <br>1.Remove the wall (i.e., connect them).
+    <br> 2.Union their sets (using Union-Find/DSU).
+
+    <h3>Stop when all cells are connected (i.e., MST formed).</h3>
+
+    <h4>Time Complexity:</h4>
+    </p> O(E (logV))</p>
+    <h4>Space Complexity: </h4>
+    <p>O(V)</p>
+    
+    <h4>Code:</h4>
+    <pre><code id="krus-code" class="language-javascript">Loading BFS code…</code></pre>
+  </section>
+
+  
+  <!-- DFS Section -->
+  <section class="algo-section" id="dfs">
+    <h2>DFS (Depth-First Search)</h2>
+    
+    <h4>Working : </h4>
+
+    <p>⭐  Starts at a random cell and marks it as visited.</p>
+    <p>⭐ Uses a stack (LIFO) or recursion to manage the traversal.</p>
+    <p>⭐ Recursively visits a random unvisited neighbor, removing the wall between them.</p>
+    <p>⭐ Backtracks when no unvisited neighbors are left.</p>
+    <p>⭐ Repeats until all cells are visited, forming a perfect maze (no loops).</p>
+   
+   
+    <h3>Initialize:</h3>
+    ->Create a grid where each cell has all its walls intact and is marked unvisited.
+    <br>->Choose a random starting cell and :-
+    <br>1.Mark it as visited.
+    <br>2.Push it onto a stack.
+
+    <h3> While the stack is not empty:-</h3>
+    <p><u>a. Look at the top of the stack (current cell).</u></p>
+    <p><u><br>b. Check for unvisited neighbors of the current cell:</u>
+          <br>->Get the list of neighboring cells (up/down/left/right).
+          <br>->Filter for neighbors that are inside the grid and unvisited.</p>
+    <p><u><br>c. If there is at least one unvisited neighbor:</u>
+          <br>->Choose one random unvisited neighbor.
+          <br>->Remove the wall between the current cell and the chosen neighbor.
+          <br>->Mark the neighbor as visited.
+          <br>->Push the neighbor onto the stack.</p>
+    <p><u>d. If no unvisited neighbors:</u>
+          <br>->Pop the cell from the stack (i.e., backtrack to the previous cell).</p>
+
+
+     
+     <h4>Time Complexity:</h4>
+    </p> O(V + E)</p>
+    <h4>Space Complexity: </h4>
+    <p>O(V)</p>
+
+    <h4>Code:</h4>
+    <pre><code id="dfs-code" class="language-javascript">Loading DFS code…</code></pre>
+  </section>
+
+
+
+
+ <!--Prims Section -->
+  <section class="algo-section" id="prims">
+    <h2>Prim's Algorithm</h2>
+
+
+    <h4><u>Working : </u></h4>
+    <p>⭐  Starts from a random cell and adds its walls to a wall list.</p>
+    <p>⭐ Randomly selects a wall that connects a visited cell to an unvisited one.</p>
+    <p>⭐ Removes the wall and marks the unvisited cell as part of the maze.</p>
+    <p>⭐ Removes the wall and marks the unvisited cell as part of the maze.</p>
+   
+    <p> Start from a random cell, mark it visited.</p>
+     <p>Add all its walls to the frontier list.</p>
+    <p>While frontier is not empty:
+    <br>->Pick a random wall.
+    <br>If it connects a visited cell to an unvisited one:
+        <br>1.Remove the wall.
+        <br>2.Mark the new cell as visited.
+        <br>3.Add that cell's walls to frontier.</p>
+
+    <p>Repeat until all cells are visited.</p>
+        <h4>Time Complexity:</h4>
+     O(E(logV))
+     <h4>Space Complexity:</h4> O(V+E)
+
+    <h4>Code:</h4>
+    <pre><code id="prims-code" class="language-javascript">Loading Dead End fillingcode…</code></pre>
+  </section>
+
+
+
+
+  <!-- Recursive Division Section -->
+  <section class="algo-section" id="rdiv">
+    <h2>Recursive Division</h2>
+
+
+    <h4>Working : </h4>
+    <p>⭐ Begins with an empty grid with no walls.</p>
+    <p>⭐ Recursively adds walls to divide the area into smaller sections.</p>
+    <p>⭐ Leaves a single opening in each wall to allow passage.</p>
+    <p>⭐ Alternates between vertical and horizontal divisions.</p>
+    <p>⭐ Continues until all regions are minimal (e.g., 1×1).</p>
+    
+    
+    
+    <h3>Start with an empty grid</h3>
+    <p>->Imagine a rectangle made of paths (empty space).
+        <br>All the internal space is open — no walls inside yet.</p>
+
+
+   <h3>Divide the area</h3>
+   <p>->Pick whether to divide horizontally or vertically (based on the shape or randomly).
+    <br>->This will split the current area into two parts.
+</p>
+
+    <h3> Add a Wall</h3>
+    <p>->Add a solid wall across the area — either top to bottom (vertical) or left to right (horizontal).
+        <br>T->This wall separates the space into two smaller regions</p>
+    
+
+     <h3> Add a hole in the wall</h3>
+     <p>->Choose one random spot in the wall and make a hole — this ensures that the two regions are still connected.
+      <br>The hole becomes a doorway or passage.</p>
+
+     
+
+    <h4>Time Complexity:</h4>
+    <p> O(V)</p>
+    <h4>Space Complexity:</h4>
+    <p> O(logV)</p>
+    
+    
+    <h4>Code:</h4>
+    <pre><code id="rdiv-code" class="language-javascript">Loading Dijkstra's code…</code></pre>
+  </section>
+
+
+
+
+  <!-- Eller's Section -->
+  <section class="algo-section" id="eller">
+    <h2>Eller's Algorithm</h2>
+    
+    <p><strong>Working:</strong></p>
+    <p>⭐ Processes the maze row by row from top to bottom.</p>
+    <p>⭐ Maintains sets for cells to track connected regions.</p>
+    <p>⭐ Randomly connects cells in the current row (horizontal passages).</p>
+    <p>⭐ Ensures vertical connections to the next row to avoid isolated sets.</p>
+    <p>⭐ Final row is fully connected to ensure one unified maze path.</p>
+  
+    <h3>Initialize the first row:</h3>
+     <p>->Assign each cell a unique set ID → current_row_sets = [1, 2, 3, ...]</p>
+     <h3>->Merge adjacent cells horizontally (randomly):</h3>
+     <p>For each cell: if neighbor has different set ID and merge allowed:-
+        <br>->Remove the wall.
+        <br>->Merge sets (update set ID of right cell to match current).</p>
+     <h3>Prepare vertical connections:</h3>
+    <p>For each set:
+      <br>->Pick at least one cell to connect vertically (so sets continue to next row).
+      <br>->Assign new set ID for each vertical link in next row.</p>
+    <h3>Repeat for next row, updating current_row_sets.</h3>
+    <h3>Final row:</h3>
+    <p> merge all adjacent cells with different set IDs</p>
+
+    <h4>Time Complexity:</h4>
+      <p> O(V)</p>
+    <h4>Space Complexity:</h4>
+    <p>O(W)</p>
+    
+    <h4>Code:</h4>
+    <pre><code id="eller-code" class="language-javascript">Loading A* code…</code></pre>
+  </section>
+
+
+
+
+
+  <!-- Scripts for fetching and syntax highlighting -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-javascript.min.js"></script>
+
+  <script>
+    const algos = [
+      { id: 'krus', file: 'kruskal.js' },
+      { id: 'dfs', file: 'dfs.js' },
+      { id: 'prims', file: 'prim.js' },
+      { id: 'rdiv', file: 'recdiv.js' },
+      { id: 'eller', file: 'eller.js' }
+     
+    ];
+
+    algos.forEach(({ id, file }) => {
+      fetch(file)
+        .then(response => response.text())
+        .then(code => {
+          const codeElem = document.getElementById(id + '-code');
+          if (codeElem) {
+            codeElem.textContent = code;
+            Prism.highlightElement(codeElem);
+          }
+        })
+        .catch(() => {
+          const codeElem = document.getElementById(id + '-code');
+          if (codeElem) {
+            codeElem.textContent = 'Failed to load ' + file;
+          }
+        });
+    });
+  </script>
+
+</body>
+</html>
