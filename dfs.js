@@ -1,6 +1,8 @@
+//check 
+//changes- clear delay
 import { Cell } from './cell.js';
 import { startTimer, stopTimer, updateInfo } from './mazeInfo.js';
-
+import { isPausedRef, getSpeed } from './pauseControl.js';
 
 export let grid = [];
 export let cols, rows;
@@ -9,15 +11,16 @@ export const cellSize = 20;
 let stack = [];
 export let current;
 export let complete = false;
+let lastStepTime = 0;
 
 export function index(i, j) {
   if (i < 0 || j < 0 || i >= cols || j >= rows) return -1;
   return i + j * cols;
 }
 
-
-export function generateMaze(p,width, height) {
+export function generateMaze(p, width, height) {
   startTimer();
+  //check for race
   let cnv = p.createCanvas(width, height);
   cnv.parent("canvas-container");
   p.frameRate(60);
@@ -28,22 +31,20 @@ export function generateMaze(p,width, height) {
   grid = [];
   stack = [];
   complete = false;
-  
+
   for (let j = 0; j < rows; j++) {
     for (let i = 0; i < cols; i++) {
-      let cell = new Cell(i, j, cellSize);
-      grid.push(cell);
+      grid.push(new Cell(i, j, cellSize));
     }
   }
 
   current = grid[0];
   current.visited = true;
+  current.highlight(p);
+
+  //change- ensure immediate first step (animation immediastly)
+  lastStepTime = -Infinity; 
 }
-
-//added pause-resume etc controls. check code here
-import { isPausedRef, getSpeed } from './pauseControl.js';
-
-let lastStepTime = 0;
 
 export function mazeDraw(p) {
   p.background(255, 230, 235, 50);
@@ -52,7 +53,7 @@ export function mazeDraw(p) {
     cell.show(p);
   }
 
-  if (isPausedRef.value) return;
+  if (isPausedRef.value || complete) return;
 
   if (p.millis() - lastStepTime >= getSpeed()) {
     lastStepTime = p.millis();
@@ -71,18 +72,19 @@ export function mazeDraw(p) {
         current = null;
         stopTimer();
       }
+
+      if (current) current.highlight(p);
     }
+
+    updateInfo({
+      mode: 'generation',
+      cols,
+      rows,
+      algorithm: "DFS (Backtracking)",
+      complete
+    });
   }
-
-  updateInfo({
-    mode: 'generation',
-    cols,
-    rows,
-    algorithm: "DFS",
-    complete
-  });
 }
-
 
 export function isComplete() {
   return complete;
