@@ -1,14 +1,19 @@
+//check 
+//changes- clear delay
 import { Cell } from './cell.js';
 import { startTimer, stopTimer, updateInfo } from './mazeInfo.js';
+import { isPausedRef, getSpeed } from './pauseControl.js';
 
 export let grid = [];
 export let cols, rows;
 export const cellSize = 20;
-
 let edges = [];
-let sets = [];
 let currentEdgeIndex = 0;
+let parent = [];
+let rank = [];
 export let complete = false;
+
+let lastStepTime = 0;
 
 export function index(i, j) {
   if (i < 0 || j < 0 || i >= cols || j >= rows) return -1;
@@ -17,7 +22,7 @@ export function index(i, j) {
 
 export function generateMaze(p, width, height) {
   startTimer();
-  let cnv = p.createCanvas( width, height);
+  let cnv = p.createCanvas(width, height);
   cnv.parent("canvas-container");
   p.frameRate(60);
 
@@ -26,44 +31,39 @@ export function generateMaze(p, width, height) {
 
   grid = [];
   edges = [];
-  sets = [];
   currentEdgeIndex = 0;
+  parent = [];
+  rank = [];
   complete = false;
 
+  // Initialize grid and union-find structure
   for (let j = 0; j < rows; j++) {
     for (let i = 0; i < cols; i++) {
       let cell = new Cell(i, j, cellSize);
       grid.push(cell);
-      cell.visited = true; 
-      
-      sets.push([cell]);
+      cell.visited = true;
+
+      let idx = index(i, j);
+      parent[idx] = idx;
+      rank[idx] = 0;
     }
   }
 
-  // Generate all possible edges
+  // Generate all possible edges (right and down only)
   for (let j = 0; j < rows; j++) {
     for (let i = 0; i < cols; i++) {
-      let cell = grid[index(i, j)];
-      
-      // Add edges to the right and bottom
       if (i < cols - 1) {
-        edges.push([cell, grid[index(i + 1, j)]]);
+        edges.push([grid[index(i, j)], grid[index(i + 1, j)]]);
       }
       if (j < rows - 1) {
-        edges.push([cell, grid[index(i, j + 1)]]);
+        edges.push([grid[index(i, j)], grid[index(i, j + 1)]]);
       }
     }
   }
 
-  // Shuffle edges randomly
   shuffle(edges, p);
+  lastStepTime = -Infinity; // Force immediate first step
 }
-
-
-//check code from here- 
-import { isPausedRef, getSpeed } from './pauseControl.js';
-
-let lastStepTime = 0;
 
 export function mazeDraw(p) {
   p.background(255);
@@ -72,24 +72,22 @@ export function mazeDraw(p) {
     cell.show(p);
   }
 
-  if (isPausedRef.value) return;  
+  if (isPausedRef.value || complete) return;
 
   if (p.millis() - lastStepTime >= getSpeed()) {
     lastStepTime = p.millis();
 
     if (currentEdgeIndex < edges.length) {
       const [cellA, cellB] = edges[currentEdgeIndex];
+      let rootA = findSet(index(cellA.i, cellA.j));
+      let rootB = findSet(index(cellB.i, cellB.j));
 
-      let setA = findSet(cellA);
-      let setB = findSet(cellB);
-
-      if (setA !== setB) {
+      if (rootA !== rootB) {
         cellA.removeWalls(cellB);
+        unionSets(rootA, rootB);
 
         cellA.highlight(p);
         cellB.highlight(p);
-
-        unionSets(setA, setB);
       }
 
       currentEdgeIndex++;
@@ -102,26 +100,31 @@ export function mazeDraw(p) {
       mode: 'generation',
       cols,
       rows,
-      algorithm: "Kruskal's",
+      algorithm: "Kruskal's (Optimized)",
       complete
     });
   }
 }
 
-
-//which set contains a cell
-function findSet(cell) {
-  return sets.find(set => set.includes(cell));
+// Union-Find (Disjoint Set) Helpers
+function findSet(idx) {
+  if (parent[idx] !== idx) {
+    parent[idx] = findSet(parent[idx]); // Path compression
+  }
+  return parent[idx];
 }
 
-//merge two sets
-function unionSets(setA, setB) {
-  const newSet = [...setA, ...setB];
-  sets = sets.filter(set => set !== setA && set !== setB);
-  sets.push(newSet);
+function unionSets(a, b) {
+  if (rank[a] < rank[b]) {
+    parent[a] = b;
+  } else if (rank[a] > rank[b]) {
+    parent[b] = a;
+  } else {
+    parent[b] = a;
+    rank[a]++;
+  }
 }
 
-// shuffle an array
 function shuffle(array, p) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(p.random(i + 1));
