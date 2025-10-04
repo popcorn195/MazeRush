@@ -97,7 +97,6 @@ html {
   transform: translateY(5px);
 }
 
-/* Bouncy animation */
 @keyframes bounce {
   0%, 100% {
     transform: translateY(0px);

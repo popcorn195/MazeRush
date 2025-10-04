@@ -10,6 +10,9 @@ import { universalGreedyBFS } from './universalGreedyBFS.js';
 import { universalWallFollower } from './universalWallFollower.js';
 import { universalDFS } from './universalDFS.js';
 import { universalDeadEndFilling } from './universalDeadEndFilling.js';
+import { clearSolverState } from './pathUtils.js';
+import { handlePause, getSpeed, isPausedRef, animationSpeedRef } from './pauseControl.js';
+
 
 let p5Instance;
 let currentAlgo = null;
@@ -24,6 +27,7 @@ document.getElementById("generateBtn").addEventListener("click", () => {
   const algo = algoSelect.value;
   const width = parseInt(document.getElementById("mazeWidth").value);
   const height = parseInt(document.getElementById("mazeHeight").value);
+  const containerId = "canvas-container";
 
   switch (algo) {
     case 'prim': currentAlgo = prim; break;
@@ -34,9 +38,9 @@ document.getElementById("generateBtn").addEventListener("click", () => {
   }
 
   p5Instance = new p5((p) => {
-    p.setup = () => currentAlgo.generateMaze(p, width, height);
+    p.setup = () => currentAlgo.generateMaze(p, width, height,containerId);
 
-    //changes for controls-gen algo. check
+    //changes- controls. check
     p.draw = () => {
       currentAlgo.mazeDraw(p);
       const isComplete = currentAlgo.isComplete ? currentAlgo.isComplete() : 
@@ -53,13 +57,10 @@ document.getElementById("generateBtn").addEventListener("click", () => {
 });
 
 
-import { clearSolverState } from './pathUtils.js';
 document.getElementById("solveBtn").addEventListener("click", async () => {
   solverAbortController.abort = true;
-
   solverAbortController = { abort: false };
 
-  // Clear previous path
   clearSolverState(currentAlgo.grid);
 
   const start = currentAlgo.grid[0];
@@ -68,36 +69,31 @@ document.getElementById("solveBtn").addEventListener("click", async () => {
 
   switch(solver) {
     case 'deadend':
-      await universalDeadEndFilling(start, end, currentAlgo, solverAbortController,getSpeed, isPausedRef);
+      await universalDeadEndFilling(start, end, currentAlgo.getContext(), solverAbortController,getSpeed, isPausedRef);
       break;
     case 'bfs':
-      await universalBFS(start, end, currentAlgo, solverAbortController,getSpeed, isPausedRef);
+      await universalBFS(start, end, currentAlgo.getContext(), solverAbortController,getSpeed, isPausedRef);
       break;
     case 'dijkstra':
-      await universalDijkstra(start, end, currentAlgo, solverAbortController,getSpeed, isPausedRef);
+      await universalDijkstra(start, end, currentAlgo.getContext(), solverAbortController,getSpeed, isPausedRef);
       break;
     case 'astar':
-      await universalAStar(start, end, currentAlgo, solverAbortController,getSpeed, isPausedRef);
+      await universalAStar(start, end, currentAlgo.getContext(), solverAbortController,getSpeed, isPausedRef);
       break;
     case 'greedy':
-      await universalGreedyBFS(start, end, currentAlgo, solverAbortController,getSpeed, isPausedRef);
+      await universalGreedyBFS(start, end, currentAlgo.getContext(), solverAbortController,getSpeed, isPausedRef);
       break;
     case 'dfs':
-      await universalDFS(start, end, currentAlgo, solverAbortController,getSpeed, isPausedRef);
+      await universalDFS(start, end, currentAlgo.getContext(), solverAbortController,getSpeed, isPausedRef);
       break;
     case 'wallfollower':
-      await universalWallFollower(start, end, currentAlgo, solverAbortController);
+      await universalWallFollower(start, end, currentAlgo.getContext(), solverAbortController);
       break;
     default:
-      await universalDeadEndFilling(start, end, currentAlgo, solverAbortController,getSpeed, isPausedRef);
+      await universalDeadEndFilling(start, end, currentAlgo.getContext(), solverAbortController,getSpeed, isPausedRef);
   }
 });
 
-
-
-//for controls
-//change- import for min alter
-import { handlePause, getSpeed, isPausedRef, animationSpeedRef } from './pauseControl.js';
 
 document.getElementById('pauseBtn').addEventListener('click', handlePause);
 

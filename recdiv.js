@@ -1,23 +1,28 @@
+//clear
 import { Cell } from './cell.js';
 import { startTimer, stopTimer, updateInfo } from './mazeInfo.js';
+import { isPausedRef, getSpeed } from './pauseControl.js';
 
 export let grid = [];
 export let cols, rows;
 export const cellSize = 20;
+let p;
 
 let wallsQueue = [];
 let currentStep = 0;
 export let complete = false;
+let lastStepTime = 0;
 
 export function index(i, j) {
   if (i < 0 || j < 0 || i >= cols || j >= rows) return -1;
   return i + j * cols;
 }
 
-export function generateMaze(p, width, height) {
+export function generateMaze(p5, width, height, containerId) {
   startTimer();
+  p = p5;
   let cnv = p.createCanvas(width, height);
-  cnv.parent("canvas-container");
+  cnv.parent(containerId);
   p.frameRate(30);
 
   cols = p.floor(p.width / cellSize);
@@ -27,6 +32,7 @@ export function generateMaze(p, width, height) {
   wallsQueue = [];
   currentStep = 0;
   complete = false;
+  lastStepTime = 0;
 
   for (let j = 0; j < rows; j++) {
     for (let i = 0; i < cols; i++) {
@@ -43,53 +49,40 @@ export function generateMaze(p, width, height) {
     }
   }
 
-  // Start recursive division
   divide(0, 0, cols, rows);
 }
 
 function divide(x, y, w, h) {
-  if (w <= 1 && h <= 1) return;
+  if (w <= 1 || h <= 1) return;
 
   const horizontal = (w > h) ? false : (h > w) ? true : Math.random() < 0.5;
 
-  if (horizontal && h >= 2) {
+  if (horizontal) {
     const wallY = y + Math.floor(Math.random() * (h - 1));
     const passageX = x + Math.floor(Math.random() * w);
-
-    
     for (let i = x; i < x + w; i++) {
       if (i !== passageX) {
-        const topCell = grid[index(i, wallY)];
-        const bottomCell = grid[index(i, wallY + 1)];
-        wallsQueue.push({ type: 'horizontal', cells: [topCell, bottomCell] });
+        const top = grid[index(i, wallY)];
+        const bottom = grid[index(i, wallY + 1)];
+        wallsQueue.push({ type: 'horizontal', cells: [top, bottom] });
       }
     }
-
     divide(x, y, w, wallY - y + 1);
     divide(x, wallY + 1, w, y + h - wallY - 1);
-  } else if (!horizontal && w >= 2) {
+  } else {
     const wallX = x + Math.floor(Math.random() * (w - 1));
     const passageY = y + Math.floor(Math.random() * h);
-
-    
     for (let j = y; j < y + h; j++) {
       if (j !== passageY) {
-        const leftCell = grid[index(wallX, j)];
-        const rightCell = grid[index(wallX + 1, j)];
-        wallsQueue.push({ type: 'vertical', cells: [leftCell, rightCell] });
+        const left = grid[index(wallX, j)];
+        const right = grid[index(wallX + 1, j)];
+        wallsQueue.push({ type: 'vertical', cells: [left, right] });
       }
     }
-
     divide(x, y, wallX - x + 1, h);
     divide(wallX + 1, y, x + w - wallX - 1, h);
   }
 }
-
-
-//check code here- addition of controls
-import { isPausedRef, getSpeed } from './pauseControl.js';
-
-let lastStepTime = 0;
 
 export function mazeDraw(p) {
   p.background(255);
@@ -98,27 +91,7 @@ export function mazeDraw(p) {
     cell.show(p);
   }
 
-  if (complete) {
-    updateInfo({
-      mode: 'generation',
-      cols,
-      rows,
-      algorithm: "Recursive Division",
-      complete
-    });
-    return;
-  }
-
-  if (isPausedRef.value) {
-    updateInfo({
-      mode: 'generation',
-      cols,
-      rows,
-      algorithm: "Recursive Division",
-      complete
-    });
-    return;
-  }
+  if (complete || isPausedRef.value) return;
 
   const now = p.millis();
   if (now - lastStepTime >= getSpeed()) {
@@ -155,4 +128,15 @@ function processWall(wall) {
 
 export function isComplete() {
   return complete;
+}
+
+export function getContext() {
+  return {
+    grid,
+    cellSize,
+    cols,
+    rows,
+    p,
+    index
+  };
 }

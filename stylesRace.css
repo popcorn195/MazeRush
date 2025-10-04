@@ -1,0 +1,111 @@
+body {
+  font-family: "Pixelify Sans", sans-serif;
+  font-weight: 700;
+  font-style: normal;  
+  text-align: center;
+  align-items: center;
+
+  background: url(/media/race-bg2.png) no-repeat center center fixed;
+  background-size: cover;
+  background-attachment: scroll;
+  image-rendering: pixelated;
+  background-color: #1E113C;
+}
+
+.context{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 60px;
+  margin-top: 5px;
+}
+
+.race-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 30px ;
+  gap: 30px;
+}
+
+.racer {
+  border: 5px solid #1E113C;
+  padding: 20px;
+  background: rgb(211, 208, 236);
+  border-radius: 10px;
+  width: 420px;
+}
+
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+select {
+  text-align: center;
+  padding: 10px;
+  width: 80%;
+  font-size: 16px;
+  border-radius: 10px;
+  background-color: #220B5A;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.canvas-container {
+  width: 400px;
+  height: 400px;
+  border: 2px solid #1E113C;
+  border-radius: 10px;
+  background-color: rgb(186, 179, 213);
+  margin: 10px 0;
+  position: relative;
+  overflow: hidden; 
+}
+
+.race-result {
+  background-color: rgb(211, 208, 236);
+  border: #1E113C 5px solid;
+  color: rgb(28, 27, 27);
+  padding: 5px 90px;
+  border-radius: 5px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.winner {
+  background-color: #28d036;
+  border-left: 5px solid #08690c;
+}
+
+.loser {
+  background-color: #c33147;
+  border-left: 5px solid #80170f;
+}
+
+h3{
+  color: black;
+  font-size: 25px;
+  margin: 10px 0 20px 0;
+}
+
+.buttons{
+  padding: 10px 60px; 
+  font-size: 20px;
+}
+
+.solving-maze-control {
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #462b8d;
+}
+
+.canvas-container canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

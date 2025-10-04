@@ -12,12 +12,10 @@ export class Cell {
     this.distance = Infinity;
   }
 
-  // For visual display
   show(p) {
     const x = this.i * this.cellSize;
     const y = this.j * this.cellSize;
 
-    // Draw walls
     p.stroke(0);
     p.strokeWeight(1);
 
@@ -26,24 +24,21 @@ export class Cell {
     if (this.walls[2]) p.line(x + this.cellSize, y + this.cellSize, x, y + this.cellSize); // bottom
     if (this.walls[3]) p.line(x, y + this.cellSize, x, y); // left
 
-    // Draw visited cells
     if (this.visited) {
       p.noStroke();
-      p.fill(200, 162, 200, 100); // Lilac translucent
+      p.fill(200, 162, 200, 100); 
       p.rect(x, y, this.cellSize, this.cellSize);
     }
   }
 
-  // For animation highlighting
   highlight(p, color = [180, 132, 200]) {
     const x = this.i * this.cellSize;
     const y = this.j * this.cellSize;
     p.noStroke();
-    p.fill(color[0], color[1], color[2]); // Deeper lilac
+    p.fill(color[0], color[1], color[2]); 
     p.rect(x, y, this.cellSize, this.cellSize);
   }
 
-  // Check for valid neighbors (for DFS and others)
   checkNeighbors(grid, index) {
     const neighbors = [];
     const i = this.i;
@@ -65,7 +60,6 @@ export class Cell {
     return undefined;
   }
 
-  // Remove walls between this cell and another
   removeWalls(other) {
     const x = this.i - other.i;
     const y = this.j - other.j;

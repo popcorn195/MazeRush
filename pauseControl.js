@@ -1,5 +1,5 @@
 export const isPausedRef = { value: false };
-export let animationSpeedRef = { value: 50 }; // in ms
+export let animationSpeedRef = { value: 25 }; //ms
 
 export function handlePause() {
   isPausedRef.value = !isPausedRef.value;

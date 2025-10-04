@@ -2,10 +2,7 @@ import { sleep, updateCellClass } from './pathUtils.js';
 import { isPausedRef, animationSpeedRef } from './pauseControl.js';
 import { startTimer, stopTimer, updateInfo } from './mazeInfo.js';
 
-//changes- controls param, param use
-//algo tryDir
-//stopTimer() bug cleared
-export async function universalWallFollower(start, end, algorithm, abortController) {
+export async function universalWallFollower(start, end, context, abortController) {
   if (abortController.abort) {
     console.log("Solver aborted!");
     return;
@@ -24,9 +21,9 @@ export async function universalWallFollower(start, end, algorithm, abortControll
   let current = start;
   const path = [current];
 
-  algorithm.grid.forEach(cell => (cell.visited = false));
+  context.grid.forEach(cell => (cell.visited = false));
   current.visited = true;
-  updateCellClass(current);
+  updateCellClass(current, false, context);
   await sleep(animationSpeedRef.value);
 
   while (current !== end) {
@@ -39,17 +36,16 @@ export async function universalWallFollower(start, end, algorithm, abortControll
 
     let moved = false;
 
-    //check- change for halt
     for (let i = 0; i < 4; i++) {
       const tryDir = (dirIndex + 3 - i) % 4;
       const { dx, dy } = directions[tryDir];
       const ni = current.i + dx;
       const nj = current.j + dy;
 
-      const neighborIndex = algorithm.index(ni, nj);
+      const neighborIndex = context.index(ni, nj);
       if (neighborIndex === -1) continue;
 
-      const neighbor = algorithm.grid[neighborIndex];
+      const neighbor = context.grid[neighborIndex];
 
       if (!current.walls[tryDir] && !neighbor.visited) {
         current = neighbor;
@@ -57,7 +53,7 @@ export async function universalWallFollower(start, end, algorithm, abortControll
         path.push(current);
         dirIndex = tryDir;
         moved = true;
-        updateCellClass(current);
+        updateCellClass(current, false, context);
         await sleep(animationSpeedRef.value);
         break;
       }
@@ -67,21 +63,21 @@ export async function universalWallFollower(start, end, algorithm, abortControll
       if (path.length <= 1) break;
       path.pop();
       current = path[path.length - 1];
-      updateCellClass(current);
+      updateCellClass(current, false, context);
       await sleep(animationSpeedRef.value);
     }
   }
 
   if (current === end) {
     for (const cell of path) {
-      updateCellClass(cell, true);
+      updateCellClass(cell, true, context);
       await sleep(animationSpeedRef.value);
     }
     stopTimer('solving');
     updateInfo({
         mode: 'solving',
-        cols: algorithm.cols,
-        rows: algorithm.rows,
+        cols: context.cols,
+        rows: context.rows,
         algorithm: "Wall Follower",
         pathFound: true
       });
@@ -90,8 +86,8 @@ export async function universalWallFollower(start, end, algorithm, abortControll
     stopTimer('solving');
     updateInfo({
         mode: 'solving',
-        cols: algorithm.cols,
-        rows: algorithm.rows,
+        cols: context.cols,
+        rows: context.rows,
         algorithm: "Wall Follower",
         pathFound: false
       });

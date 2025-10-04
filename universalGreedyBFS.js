@@ -5,8 +5,7 @@ function heuristic(a, b) {
   return Math.abs(a.i - b.i) + Math.abs(a.j - b.j);
 }
 
-//changes- controls param, param use
-export async function universalGreedyBFS(start, end, algorithm, abortController, getSpeed, isPausedRef) {
+export async function universalGreedyBFS(start, end, context, abortController, getSpeed, isPausedRef) {
   if (abortController.abort) {
     console.log("Solver aborted!");
     return;
@@ -17,7 +16,7 @@ export async function universalGreedyBFS(start, end, algorithm, abortController,
   const openSetSet = new Set([`${start.i},${start.j}`]);
   const visited = new Set();
 
-  algorithm.grid.forEach(cell => cell.parent = null);
+  context.grid.forEach(cell => cell.parent = null);
 
   while (openSet.length > 0) {
     if (abortController.abort) {
@@ -37,7 +36,7 @@ export async function universalGreedyBFS(start, end, algorithm, abortController,
     if (visited.has(currentKey)) continue;
     visited.add(currentKey);
 
-    updateCellClass(current);
+    updateCellClass(current, false, context);
     await sleep(getSpeed());
 
     if (current === end) {
@@ -49,22 +48,22 @@ export async function universalGreedyBFS(start, end, algorithm, abortController,
           await sleep(100);
         }
 
-        updateCellClass(cell, true);
+        updateCellClass(cell, true, context);
         await sleep(getSpeed());
       }
 
       stopTimer('solving');
       updateInfo({
         mode: 'solving',
-        cols: algorithm.cols,
-        rows: algorithm.rows,
+        cols: context.cols,
+        rows: context.rows,
         algorithm: "Greedy BFS",
         pathFound: true
       });
       return;
     }
 
-    const neighbors = getNeighbors(current, algorithm.grid, algorithm);
+    const neighbors = getNeighbors(current, context.grid, context);
     for (const neighbor of neighbors) {
       const neighborKey = `${neighbor.i},${neighbor.j}`;
       if (!visited.has(neighborKey) && !openSetSet.has(neighborKey)) {
@@ -78,8 +77,8 @@ export async function universalGreedyBFS(start, end, algorithm, abortController,
   stopTimer('solving');
   updateInfo({
     mode: 'solving',
-    cols: algorithm.cols,
-    rows: algorithm.rows,
+    cols: context.cols,
+    rows: context.rows,
     algorithm: "Greedy BFS",
     pathFound: false
   });

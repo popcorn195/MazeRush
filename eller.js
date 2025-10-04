@@ -1,23 +1,28 @@
+//cleared
 import { Cell } from './cell.js';
 import { startTimer, stopTimer, updateInfo } from './mazeInfo.js';
+import { isPausedRef, getSpeed } from './pauseControl.js'; 
 
 export let grid = [];
 export let cols, rows;
 export const cellSize = 20;
+let p;
 
 let currentRow = 0;
 let sets = [];
 export let complete = false;
+let lastStepTime = 0; 
 
 export function index(i, j) {
   if (i < 0 || j < 0 || i >= cols || j >= rows) return -1;
   return i + j * cols;
 }
 
-export function generateMaze(p, width, height) {
+export function generateMaze(p5, width, height,containerId) {
   startTimer();
+  p= p5;
   let cnv = p.createCanvas( width, height);
-  cnv.parent("canvas-container");
+  cnv.parent(containerId);
   p.frameRate(10);
 
   cols = p.floor(p.width / cellSize);
@@ -27,6 +32,7 @@ export function generateMaze(p, width, height) {
   currentRow = 0;
   sets = [];
   complete = false;
+  lastStepTime = 0;
 
   for (let i = 0; i < cols; i++) {
     let id = i;
@@ -39,12 +45,6 @@ export function generateMaze(p, width, height) {
   horizontalConnections(p, 0);
 }
 
-
-//check code here- added controls
-import { isPausedRef, getSpeed } from './pauseControl.js'; // ✅ NEW
-
-let lastStepTime = 0; // ✅ NEW
-
 export function mazeDraw(p) {
   if (grid.length === 0) return;
 
@@ -53,7 +53,7 @@ export function mazeDraw(p) {
     cell.show(p);
   }
 
-  if (isPausedRef.value) return;
+  if (complete || isPausedRef.value) return;
 
   if (p.millis() - lastStepTime >= getSpeed()) {
     lastStepTime = p.millis();
@@ -65,6 +65,7 @@ export function mazeDraw(p) {
       finalizeLastRow(p);
       complete = true;
       stopTimer(); 
+    }
       updateInfo({
         mode: 'generation',
         cols,
@@ -72,23 +73,22 @@ export function mazeDraw(p) {
         algorithm: "Eller's",
         complete
       });
-      currentRow++; 
-      return; 
+      // currentRow++; 
+      // return; 
     }
 
-    console.log("Current row:", currentRow, "Complete:", complete);
+    // console.log("Current row:", currentRow, "Complete:", complete);
 
-    if (!complete) {
-      updateInfo({
-        mode: 'generation',
-        cols,
-        rows,
-        algorithm: "Eller's",
-        complete
-      });
-    }
+    // if (!complete) {
+    //   updateInfo({
+    //     mode: 'generation',
+    //     cols,
+    //     rows,
+    //     algorithm: "Eller's",
+    //     complete
+    //   });
   }
-}
+  
 
 
 function generateNextRow(p) {
@@ -123,7 +123,6 @@ function generateNextRow(p) {
     }
   }
 
-  // Fill unconnected cells
   for (let i = 0; i < cols; i++) {
     if (!newRow[i]) {
       const cell = new Cell(i, currentRow + 1, cellSize);
@@ -173,7 +172,6 @@ function finalizeLastRow() {
     }
   }
 
-  // Remove bottom walls of the last row to ensure solver access
   for (let i = 0; i < cols; i++) {
     let cell = grid[(rows - 1) * cols + i];
     cell.walls[2] = false;
@@ -183,4 +181,15 @@ function finalizeLastRow() {
 
 export function isComplete() {
   return complete;
+}
+
+export function getContext() {
+  return {
+    grid,
+    cellSize,
+    cols,
+    rows,
+    p,
+    index
+  };
 }

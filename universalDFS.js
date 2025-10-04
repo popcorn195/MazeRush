@@ -1,9 +1,7 @@
 import { sleep, updateCellClass, getNeighbors, reconstructPath } from './pathUtils.js';
 import { startTimer, stopTimer, updateInfo } from './mazeInfo.js';
 
-
-//changes- controls param, param use
-export async function universalDFS(start, end, algorithm, abortController, getSpeed, isPausedRef) {
+export async function universalDFS(start, end, context, abortController, getSpeed, isPausedRef) {
   if (abortController.abort) {
     console.log("Solver aborted!");
     return;
@@ -12,7 +10,7 @@ export async function universalDFS(start, end, algorithm, abortController, getSp
   startTimer('solving');
   const stack = [start];
   const visited = new Set();
-  algorithm.grid.forEach(cell => cell.parent = null);
+  context.grid.forEach(cell => cell.parent = null);
 
   while (stack.length > 0) {
     if (abortController.abort) {
@@ -30,7 +28,7 @@ export async function universalDFS(start, end, algorithm, abortController, getSp
     visited.add(current);
 
     current.visited = true;
-    updateCellClass(current);
+    updateCellClass(current, false, context);
     await sleep(getSpeed());
 
     if (current === end) {
@@ -42,22 +40,22 @@ export async function universalDFS(start, end, algorithm, abortController, getSp
           await sleep(100);
         }
 
-        updateCellClass(cell, true);
+        updateCellClass(cell, true, context);
         await sleep(getSpeed());
       }
 
       stopTimer('solving');
       updateInfo({
         mode: 'solving',
-        cols: algorithm.cols,
-        rows: algorithm.rows,
+        cols: context.cols,
+        rows: context.rows,
         algorithm: "DFS",
         pathFound: true
       });
       return;
     }
 
-    const neighbors = getNeighbors(current, algorithm.grid, algorithm);
+    const neighbors = getNeighbors(current, context.grid, context);
     neighbors.forEach(neighbor => {
       if (!visited.has(neighbor)) {
         neighbor.parent = current;
@@ -69,8 +67,8 @@ export async function universalDFS(start, end, algorithm, abortController, getSp
   stopTimer('solving');
   updateInfo({
     mode: 'solving',
-    cols: algorithm.cols,
-    rows: algorithm.rows,
+    cols: context.cols,
+    rows: context.rows,
     algorithm: "DFS",
     pathFound: false
   });

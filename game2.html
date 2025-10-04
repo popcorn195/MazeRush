@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maze Game with Recursive Backtracking</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.2/p5.min.js"></script>
+  <style>
+    body { 
+      display: flex; 
+      background-color: #1f2937; 
+      font-family: Arial, sans-serif; 
+    }
+    #sidebar { 
+      width: 300px; 
+      padding: 20px; 
+      background-color: #111827; 
+      color: #e5e7eb; 
+      border-right: 1px solid #374151; 
+    }
+    canvas { 
+      border: 2px solid #6b7280; 
+    }
+  </style>
+</head>
+<body>
+
+  <div id="sidebar" class="h-screen overflow-auto">
+    <h1 class="text-2xl font-bold mb-4 text-white">Learn with Mazes</h1>
+    <p class="mb-4">Explore Recursive Backtracking to generate unique maze paths!</p>
+    <h2 class="text-lg font-semibold text-white">How it Works:</h2>
+    <ul class="list-disc pl-5 mb-4">
+      <li>Starts at top-left.</li>
+      <li>Ends at bottom-right.</li>
+      <li>Explores a random unvisited neighbor.</li>
+      <li>Removes walls to connect cells.</li>
+      <li>Backtracks when no unvisited neighbors remain.</li>
+      <li>Guarantees a path from start to end.</li>
+    </ul>
+    <p><strong>Goal:</strong> Drag the green box from top-left to bottom-right. Backtrack if needed!</p>
+    <button id="resetBtn" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Generate New Maze</button>
+  </div>
+  <div id="p5-container" class="flex-1 p-4"></div>
+
+  <script>
+    let maze;
+    let cellSize = 40;
+    let cols = 15;
+    let rows = 15;
+    let player;
+    let path = [];
+    let won = false;
+    let particles = [];
+    let isDragging = false;
+
+    function setup() {
+      let canvas = createCanvas(cols * cellSize, rows * cellSize);
+      canvas.parent('p5-container');
+      generateMaze();
+      player = { x: 0, y: 0 };
+      path = [{ x: 0, y: 0 }];
+      document.getElementById('resetBtn').addEventListener('click', resetGame);
+    }
+
+    function generateMaze() {
+      maze = Array(rows).fill().map(() => Array(cols).fill().map(() => ({
+        right: true, bottom: true, visited: false
+      })));
+
+      function carve(x, y) {
+        maze[y][x].visited = true;
+        let directions = [
+          { dx: 1, dy: 0, wall: 'right' },  // Right
+          { dx: -1, dy: 0, wall: 'right', opp: true }, // Left
+          { dx: 0, dy: 1, wall: 'bottom' }, // Down
+          { dx: 0, dy: -1, wall: 'bottom', opp: true } // Up
+        ];
+
+        for (let i = directions.length - 1; i > 0; i--) {
+          let j = floor(random(i + 1));
+          [directions[i], directions[j]] = [directions[j], directions[i]];
+        }
+
+        for (let dir of directions) {
+          let nx = x + dir.dx;
+          let ny = y + dir.dy;
+          if (nx >= 0 && nx < cols && ny >= 0 && ny < rows && !maze[ny][nx].visited) {
+            if (dir.wall === 'right' && !dir.opp) {
+              maze[y][x].right = false;
+            } else if (dir.wall === 'right' && dir.opp) {
+              maze[ny][nx].right = false;
+            } else if (dir.wall === 'bottom' && !dir.opp) {
+              maze[y][x].bottom = false;
+            } else if (dir.wall === 'bottom' && dir.opp) {
+              maze[ny][nx].bottom = false;
+            }
+            carve(nx, ny);
+          }
+        }
+      }
+
+      carve(0, 0);
+
+      maze[0][0].right = maze[0][0].bottom = false;
+      maze[rows - 1][cols - 2].right = false;
+      maze[rows - 2][cols - 1].bottom = false;
+      console.log("Maze generated:", maze);
+    }
+
+    function draw() {
+      background(55, 65, 81); 
+      
+      stroke(255); 
+      strokeWeight(2);
+      for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+          let x = col * cellSize;
+          let y = row * cellSize;
+          if (maze[row][col].right) {
+            line(x + cellSize, y, x + cellSize, y + cellSize);
+          }
+          if (maze[row][col].bottom) {
+            line(x, y + cellSize, x + cellSize, y + cellSize);
+          }
+        }
+      }
+      
+      //player drag box
+      fill(0, 255, 0); 
+      noStroke();
+      rect(player.x * cellSize + 5, player.y * cellSize + 5, cellSize - 10, cellSize - 10);
+
+      if (won) {
+        for (let particle of particles) {
+          particle.update();
+          particle.show();
+        }
+        fill(239, 68, 68); 
+        textSize(32);
+        textAlign(CENTER, CENTER);
+        text("Congratulations!", width / 2, height / 2);
+      }
+    }
+
+    function mousePressed() {
+      if (won) return;
+      let col = floor(mouseX / cellSize);
+      let row = floor(mouseY / cellSize);
+      if (col === player.x && row === player.y) {
+        isDragging = true;
+        console.log("Started dragging at:", col, row);
+      }
+    }
+
+    function mouseDragged() {
+      if (!isDragging || won) return;
+      let col = floor(mouseX / cellSize);
+      let row = floor(mouseY / cellSize);
+      if (col >= 0 && col < cols && row >= 0 && row < rows) {
+        tryMove(col, row);
+      }
+    }
+
+    function mouseReleased() {
+      isDragging = false;
+      console.log("Stopped dragging");
+    }
+
+    function tryMove(col, row) {
+      let last = path[path.length - 1];
+      console.log(`Trying to drag from (${last.x}, ${last.y}) to (${col}, ${row})`);
+
+      if (path.length > 1 && col === path[path.length - 2].x && row === path[path.length - 2].y) {
+        console.log("Backtracking");
+        path.pop();
+        player = { x: col, y: row };
+        return;
+      }
+
+      if (abs(col - last.x) + abs(row - last.y) !== 1) {
+        console.log("Not adjacent");
+        return;
+      }
+
+      if (col === last.x + 1 && row === last.y && !maze[last.y][last.x].right) {
+        console.log("Moving right");
+        player = { x: col, y: row };
+        path.push({ x: col, y: row });
+      } else if (col === last.x - 1 && row === last.y && !maze[row][col].right) {
+        console.log("Moving left");
+        player = { x: col, y: row };
+        path.push({ x: col, y: row });
+      } else if (row === last.y + 1 && col === last.x && !maze[last.y][col].bottom) {
+        console.log("Moving down");
+        player = { x: col, y: row };
+        path.push({ x: col, y: row });
+      } else if (row === last.y - 1 && col === last.x && !maze[row][col].bottom) {
+        console.log("Moving up");
+        player = { x: col, y: row };
+        path.push({ x: col, y: row });
+      } else {
+        console.log("Move blocked by wall");
+      }
+
+      if (player.x === cols - 1 && player.y === rows - 1) {
+        console.log("Win condition met!");
+        won = true;
+        for (let i = 0; i < 50; i++) {
+          particles.push(new Particle(width - cellSize / 2, height - cellSize / 2));
+        }
+      }
+    }
+
+    function resetGame() {
+      won = false;
+      particles = [];
+      generateMaze();
+      player = { x: 0, y: 0 };
+      path = [{ x: 0, y: 0 }];
+      console.log("Game reset");
+    }
+
+    class Particle {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.vx = random(-2, 2);
+        this.vy = random(-5, -1);
+        this.alpha = 255;
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.alpha -= 5;
+      }
+
+      show() {
+        noStroke();
+        fill(255, 165, 0, this.alpha); 
+        ellipse(this.x, this.y, 10);
+      }
+    }
+  </script>
+</body>
+</html>

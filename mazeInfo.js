@@ -39,53 +39,53 @@ const algorithmDetails = {
   }
 };
 
-//change- updateInfo solve bug clear
+//change- updateInfo solve clear
 const solverDetails = {
   "DFS": {
     speed: "Fast",
-    timeComplexity: "O(N)",
-    spaceComplexity: "O(N)",
+    timeComplexity: "O(V+E)",
+    spaceComplexity: "O(V)",
     remarks: "Depth-first pathfinding"
   },
   "BFS": {
     speed: "Moderate",
-    timeComplexity: "O(N)",
-    spaceComplexity: "O(N)",
+    timeComplexity: "O(V+E)",
+    spaceComplexity: "O(V)",
     remarks: "Finds shortest path"
   },
   "A*": {
     speed: "Varies",
-    timeComplexity: "O(E)",
-    spaceComplexity: "O(N)",
-    remarks: "Heuristic-based optimal path"
+    timeComplexity: "O((V+E)log V)",
+    spaceComplexity: "O(V)",
+    remarks: "Heuristic-cost-based optimal path"
   },
   "Wall Follower": {
     speed: "Slow",
-    timeComplexity: "O(N)",
-    spaceComplexity: "O(1)",
+    timeComplexity: "O(V)",
+    spaceComplexity: "O(V)/O(1)",
     remarks: "Follows maze wall; not guaranteed shortest"
   },
   "Dijkstra": {
     speed: "Moderate",
-    timeComplexity: "O(E log N)",
-    spaceComplexity: "O(N)",
+    timeComplexity: "O((V+E)log V)",
+    spaceComplexity: "O(V)",
     remarks: "Shortest path with uniform weights"
   },
   "Greedy BFS": {
     speed: "Fast",
-    timeComplexity: "O(E)",
-    spaceComplexity: "O(N)",
+    timeComplexity: "O((V+E)log V)",
+    spaceComplexity: "O(V)",
     remarks: "Heuristic-driven; not always optimal"
   },
   "Dead-End Filling": {
     speed: "Slow",
     timeComplexity: "O(V+E)",
-    spaceComplexity: "O(N)",
+    spaceComplexity: "O(V)",
     remarks: "Unique but can be inefficient on large mazes."
   }
 };
 
-// Timing controls
+// timing controls
 // change- all algo, pathutils remove
 export function startTimer(type = 'generation') {
   if (type === 'generation') generationStart = performance.now();
@@ -95,12 +95,13 @@ export function startTimer(type = 'generation') {
 export function stopTimer(type = 'generation') {
   const now = performance.now();
   if (type === 'generation') {
-    timings.generation = ((now - generationStart) / 1000).toFixed(2);
+    timings.generation = ((now - generationStart) / 1000).toFixed(2); //mstos
   } else {
     timings.solving = ((now - solveStart) / 1000).toFixed(2);
   }
 }
 
+//from each algo
 export function updateInfo(context) {
   const infoDiv = document.getElementById("maze-info");
   if (!infoDiv) return;

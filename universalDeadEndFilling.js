@@ -1,9 +1,7 @@
 import { sleep, updateCellClass, getNeighbors, reconstructPath } from './pathUtils.js';
 import { startTimer, stopTimer, updateInfo } from './mazeInfo.js';
 
-
-//changes- controls param, param use
-export async function universalDeadEndFilling(start, end, algorithm, abortController, getSpeed, isPausedRef) {
+export async function universalDeadEndFilling(start, end, context, abortController, getSpeed, isPausedRef) {
   if (abortController.abort) {
     console.log("Solver aborted!");
     return;
@@ -11,7 +9,7 @@ export async function universalDeadEndFilling(start, end, algorithm, abortContro
 
   startTimer('solving');
 
-  algorithm.grid.forEach(cell => {
+  context.grid.forEach(cell => {
     cell.visited = false;
     cell.parent = null;
   });
@@ -28,13 +26,13 @@ export async function universalDeadEndFilling(start, end, algorithm, abortContro
 
     found_deadend = false;
 
-    for (const cell of algorithm.grid) {
+    for (const cell of context.grid) {
       if (cell === start || cell === end || cell.visited) continue;
 
-      const neighbors = getNeighbors(cell, algorithm.grid, algorithm).filter(n => !n.visited);
+      const neighbors = getNeighbors(cell, context.grid, context).filter(n => !n.visited);
       if (neighbors.length <= 1) {
         cell.visited = true;
-        updateCellClass(cell);
+        updateCellClass(cell, false, context);
 
         while (isPausedRef.value) {
           await sleep(100);
@@ -46,6 +44,7 @@ export async function universalDeadEndFilling(start, end, algorithm, abortContro
     }
   }
 
+  //this is for tracing the path after eliminating dead ends
   let current = start;
   const queue = [start];
   const visited = new Set();
@@ -70,22 +69,22 @@ export async function universalDeadEndFilling(start, end, algorithm, abortContro
           await sleep(100);
         }
 
-        updateCellClass(cell, true);
+        updateCellClass(cell, true, context);
         await sleep(getSpeed());
       }
 
       stopTimer('solving');
       updateInfo({
         mode: 'solving',
-        cols: algorithm.cols,
-        rows: algorithm.rows,
+        cols: context.cols,
+        rows: context.rows,
         algorithm: "Dead-End Filling",
         pathFound: true
       });
       return;
     }
 
-    const neighbors = getNeighbors(current, algorithm.grid, algorithm).filter(n => !n.visited);
+    const neighbors = getNeighbors(current, context.grid, context).filter(n => !n.visited);
     for (const neighbor of neighbors) {
       if (!visited.has(neighbor)) {
         neighbor.parent = current;
@@ -97,8 +96,8 @@ export async function universalDeadEndFilling(start, end, algorithm, abortContro
   stopTimer('solving');
   updateInfo({
     mode: 'solving',
-    cols: algorithm.cols,
-    rows: algorithm.rows,
+    cols: context.cols,
+    rows: context.rows,
     algorithm: "Dead-End Filling",
     pathFound: false
   });

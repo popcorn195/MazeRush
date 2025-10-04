@@ -1,15 +1,15 @@
 import { sleep, updateCellClass, getNeighbors, reconstructPath } from './pathUtils.js';
 import { startTimer, stopTimer, updateInfo } from './mazeInfo.js';
 
-//changes- controls param, param use
-export async function universalBFS(start, end, algorithm, abortController, getSpeed, isPausedRef) {
+export async function universalBFS(start, end, context, abortController, getSpeed, isPausedRef) {
   if (abortController.abort) {
     console.log("Solver aborted!");
     return;
   }
 
   startTimer('solving');
-  algorithm.grid.forEach(cell => cell.parent = null);
+  const { grid } = context; //grid=context.grid
+  grid.forEach(cell => cell.parent = null);
   const queue = [start];
   const visited = new Set();
 
@@ -26,7 +26,7 @@ export async function universalBFS(start, end, algorithm, abortController, getSp
     const current = queue.shift();
     if (visited.has(current)) continue;
     visited.add(current);
-    updateCellClass(current);
+    updateCellClass(current, false, context);
 
     if (abortController.abort) {
       console.log("Solver aborted before sleep!");
@@ -46,22 +46,22 @@ export async function universalBFS(start, end, algorithm, abortController, getSp
           await sleep(100); 
         }
 
-        updateCellClass(cell, true);
+        updateCellClass(cell, true, context);
         await sleep(getSpeed());
       }
 
       stopTimer('solving');
       updateInfo({
         mode: 'solving',
-        cols: algorithm.cols,
-        rows: algorithm.rows,
+        cols: context.cols,
+        rows: context.rows,
         algorithm: "BFS",
         pathFound: true
       });
       return;
     }
 
-    const neighbors = getNeighbors(current, algorithm.grid, algorithm);
+    const neighbors = getNeighbors(current, context.grid, context);
     for (const neighbor of neighbors) {
       if (!visited.has(neighbor)) {
         neighbor.parent = current;
@@ -73,8 +73,8 @@ export async function universalBFS(start, end, algorithm, abortController, getSp
   stopTimer('solving');
   updateInfo({
     mode: 'solving',
-    cols: algorithm.cols,
-    rows: algorithm.rows,
+    cols: context.cols,
+    rows: context.rows,
     algorithm: "BFS",
     pathFound: false
   });

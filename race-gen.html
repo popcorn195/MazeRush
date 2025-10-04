@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="style-common.css">
+  <link rel="stylesheet" href="stylesRace.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+  <title>Maze Generation Race</title>
+</head>
+<body>
+  <header class="navbar">
+        <div class="logo">
+            <img src="/media/logo.png" alt="">
+            <a href="index.html">MazeRush</a>
+        </div>
+
+        <div class="nav-tabs">
+            <a href="learn.html">✧Learn</a>
+            <a href="mazes.html">✧Mazes</a>
+            <a href="race.html" style="text-decoration: underline 2px #91C9EE solid; color: #91C9EE">✧Race</a>
+            <a href="game.html">✧Game</a>
+        </div>
+    </header>
+
+  <div class="context">
+    <div class="title"><h1>Maze Generation Race</h1></div>
+    
+    <div id="controls">
+      <button class="buttons" id="startRace" >Start Race !</button>
+    </div>
+
+    <div class="race-container">
+      <div class="racer">
+        <h3>Algorithm 1</h3>
+        <select class="gen-algo">
+          <option value="eller">Eller's Algorithm</option>
+          <option value="recdiv">Recursive Division</option>
+          <option value="kruskal">Kruskal's Algorithm</option>
+          <option value="dfs">Depth-First Search</option>
+          <option value="prim">Prim's Algorithm</option>
+        </select>
+        <div class="canvas-container" id="canvas-container-1"></div>
+      </div>
+      
+      <div class="racer">
+        <h3>Algorithm 2</h3>
+        <select class="gen-algo">
+          <option value="recdiv">Recursive Division</option>
+          <option value="eller">Eller's Algorithm</option>
+          <option value="prim">Prim's Algorithm</option>
+          <option value="dfs">Depth-First Search</option>
+          <option value="kruskal">Kruskal's Algorithm</option>
+        </select>
+        <div class="canvas-container" id="canvas-container-2"></div>
+      </div>
+    </div>
+
+    <div id="raceResult" class="race-result"></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <script type="module" src="raceGen.js"></script>
+</body>
+</html>

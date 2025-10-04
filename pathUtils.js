@@ -2,16 +2,26 @@ export function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+export function updateCellClass(cell, isPath, context) {
+  const p = context.p;
+  if (!p) return;
 
-//cell.i and cell.j as x/y coordinates on a canvas grid.
-export function updateCellClass(cell, isPath = false) {
-  const ctx = document.getElementById("defaultCanvas0").getContext("2d");
-  ctx.fillStyle = isPath ? "rgba(246, 8, 36, 0.59)" : "rgba(38, 15, 139, 0.62)";
-  ctx.fillRect(cell.i * cell.cellSize, cell.j * cell.cellSize, cell.cellSize, cell.cellSize);
+  const { cellSize } = cell;
+  const x = cell.i * cellSize;
+  const y = cell.j * cellSize;
+
+  p.push(); //saves
+  p.noStroke(); //disables outlines
+  p.fill(isPath ? "rgba(246, 8, 36, 0.59)" : "rgba(38, 15, 139, 0.62)"); //sets
+  p.rect(x, y, cellSize, cellSize); //draws
+  p.pop(); //restores
 }
+
 
 export function getNeighbors(cell, grid, algorithm) {
   const neighbors = [];
+  const { index } = algorithm;
+
   const directions = [
     { dx: 0, dy: -1, wallIndex: 0 }, // Top
     { dx: 1, dy: 0, wallIndex: 1 },  // Right
@@ -19,15 +29,17 @@ export function getNeighbors(cell, grid, algorithm) {
     { dx: -1, dy: 0, wallIndex: 3 }  // Left
   ];
 
-  //neighbor coordinates: ni = i + dx, nj = j + dy
-  directions.forEach(({ dx, dy, wallIndex }) => {
+  //ni = i + dx, nj = j + dy
+  for (const { dx, dy, wallIndex } of directions) {
     if (!cell.walls[wallIndex]) {
       const ni = cell.i + dx;
       const nj = cell.j + dy;
-      const idx = algorithm.index(ni, nj);
-      if (idx !== -1) neighbors.push(grid[idx]);
+      const idx = index(ni, nj);
+      if (idx !== -1) {
+        neighbors.push(grid[idx]);
+      }
     }
-  });
+  }
   return neighbors;
 }
 
@@ -41,14 +53,15 @@ export function reconstructPath(end) {
   return path.reverse(); 
 }
 
-//check- timing functions. 
-// change- remove from solve algo, no use
+
+//change- removed, use pathutils
 /*let solveStartTime = null; 
 
 export function startSolveTimer() {
   solveStartTime = performance.now();
 }
 
+// calculates the time passed in seconds.
 export function getSolveTime() {
   return ((performance.now() - solveStartTime) / 1000).toFixed(2);
 }*/
@@ -67,13 +80,13 @@ export function clearSolverState(grid) {
     cell.h = Infinity;
     cell.isFrontier = false;
 
-    ctx.clearRect(cell.i * cell.cellSize, cell.j * cell.cellSize, cell.cellSize, cell.cellSize);
+    const x = cell.i * cell.cellSize;
+    const y = cell.j * cell.cellSize;
+    ctx.clearRect(x, y, cell.cellSize, cell.cellSize);
     
     ctx.strokeStyle = "#000";
     ctx.lineWidth = 1;
 
-    const x = cell.i * cell.cellSize;
-    const y = cell.j * cell.cellSize;
 
     if (cell.walls[0]) { // top
       ctx.beginPath();

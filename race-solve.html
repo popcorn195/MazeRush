@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Maze Solving Race</title>
+  <link rel="stylesheet" href="style-common.css">
+  <link rel="stylesheet" href="stylesRace.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="navbar">
+        <div class="logo">
+            <img src="/media/logo.png" alt="">
+            <a href="index.html">MazeRush</a>
+        </div>
+
+        <div class="nav-tabs">
+            <a href="learn.html">✧Learn</a>
+            <a href="mazes.html">✧Mazes</a>
+            <a href="race.html" style="text-decoration: underline 2px #91C9EE solid; color: #91C9EE">✧Race</a>
+            <a href="game.html">✧Game</a>
+        </div>
+    </header>
+
+  <div class="context">
+  <div class="title"><h1>Maze Solving Race</h1></div>
+
+    <div id="controls">
+      <div class="solving-maze-control">
+        <label>Generator:</label><br>
+        <select id="solvingMazeAlgo">
+          <option value="eller">Eller's Algorithm</option>
+          <option value="recdiv">Recursive Division</option>
+          <option value="dfs">Depth-First Search</option>
+          <option value="prim">Prim's Algorithm</option>
+          <option value="kruskal">Kruskal's Algorithm</option>
+        </select>
+      </div>
+      <button id="startRace" class="buttons" style="margin-top: 20px;">Start Race !</button>
+    </div>
+
+    <div class="race-container">
+      <div class="racer">
+        <h3>Algorithm 1</h3>
+        <select class="solver-algo">
+          <option value="astar">A* Algorithm</option>
+          <option value="greedy">Greedy Best-First Search</option>
+          <option value="dijkstra">Dijkstra's Algorithm</option>
+          <option value="wallfollower">Wall Follower</option>
+          <option value="deadend">Dead-End Filling</option>
+          <option value="bfs">Breadth-First Search</option>
+          <option value="dfs">Depth-First Search</option>
+          </select>
+
+        <div class="canvas-container" id="solver-canvas-1" ></div>
+      </div>
+      
+      <div class="racer">
+        <h3>Algorithm 2</h3>
+        <select class="solver-algo">
+          <option value="greedy">Greedy Best-First Search</option>
+          <option value="astar">A* Algorithm</option>
+          <option value="dijkstra">Dijkstra's Algorithm</option>
+          <option value="wallfollower">Wall Follower</option>
+          <option value="deadend">Dead-End Filling</option>
+          <option value="bfs">Breadth-First Search</option>
+          <option value="dfs">Depth-First Search</option>
+          </select>
+
+        <div class="canvas-container" id="solver-canvas-2"></div>
+      </div>
+    </div>
+
+    <div id="raceResult" class="race-result"></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <script type="module" src="raceSolve.js"></script>
+</body>
+</html>
