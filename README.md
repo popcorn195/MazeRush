@@ -41,6 +41,7 @@
 
 ## 🖼️ Screenshots
 
+|:----:|
 | Home | 
 | <img width="1898" height="874" alt="image" src="https://github.com/user-attachments/assets/bb01a152-fb84-4ef5-a34b-3dc7d5706d76" />
 |:----:|
@@ -52,6 +53,7 @@
 |:----:|
 |  Race |
 | <img width="1898" height="868" alt="image" src="https://github.com/user-attachments/assets/34cd20ca-2b17-4c16-a593-0ea13da8120d" />
+|:----:|
 
 ---
 
