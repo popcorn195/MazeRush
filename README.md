@@ -41,14 +41,24 @@
 
 ## 🖼️ Screenshots
 
-| Home | 
-| <img width="1898" height="874" alt="image" src="https://github.com/user-attachments/assets/bb01a152-fb84-4ef5-a34b-3dc7d5706d76" /> 
-| Learn |
-| <img width="1918" height="871" alt="image" src="https://github.com/user-attachments/assets/78cad63e-3dde-49f1-b941-65efd29912f9" /> 
-| Maze |
-| <img width="1900" height="869" alt="image" src="https://github.com/user-attachments/assets/2ce0a789-b3ad-4955-8fde-a3d9f35ae91f" /> 
-|  Race |
-| <img width="1898" height="868" alt="image" src="https://github.com/user-attachments/assets/34cd20ca-2b17-4c16-a593-0ea13da8120d" /> 
+## 🖼️ Screenshots
+
+| **Home** |
+|:--:|
+| <img width="1898" height="874" alt="Home Page" src="https://github.com/user-attachments/assets/bb01a152-fb84-4ef5-a34b-3dc7d5706d76" /> |
+
+| **Learn** |
+|:--:|
+| <img width="1918" height="871" alt="Learn Page" src="https://github.com/user-attachments/assets/78cad63e-3dde-49f1-b941-65efd29912f9" /> |
+
+| **Maze** |
+|:--:|
+| <img width="1900" height="869" alt="Maze Page" src="https://github.com/user-attachments/assets/2ce0a789-b3ad-4955-8fde-a3d9f35ae91f" /> |
+
+| **Race** |
+|:--:|
+| <img width="1898" height="868" alt="Race Page" src="https://github.com/user-attachments/assets/34cd20ca-2b17-4c16-a593-0ea13da8120d" /> |
+
 
 ---
 
