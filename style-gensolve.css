@@ -97,7 +97,7 @@
 }
 
 body{
-    background: url(/media/gensolve-bg.png) no-repeat center center fixed;
+    background: url('./media/gensolve-bg.png') no-repeat center center fixed;
     background-size: contain;
     background-color: #2E1B5B;
     image-rendering: pixelated;

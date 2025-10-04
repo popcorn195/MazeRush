@@ -5,7 +5,7 @@ html {
 .context-main {
     flex-direction: column;
   height: 90vh;
-  background: url('/media/mazes-bg.png') no-repeat center center fixed;
+  background: url('./media/mazes-bg.png') no-repeat center center fixed;
   background-size: cover;
   background-color: #4a1a7c;
   overflow: hidden;
@@ -39,7 +39,7 @@ html {
     
 
     height: 100vh;
-  background: url('/media/maze-bg2.png') no-repeat center center fixed;
+  background: url('./media/maze-bg2.png') no-repeat center center fixed;
   background-size: cover;
   background-color: #4a1a7c;
   overflow: hidden;

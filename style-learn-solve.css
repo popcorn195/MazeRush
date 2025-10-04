@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 80px 20px;
-  background: url('/media/gamebg.png') center/cover fixed no-repeat;
+  background: url('./media/gamebg.png') center/cover fixed no-repeat;
   color: #252725;
   font-family: 'Pixelify Sans',sans-serif;
   font-weight: bold;

@@ -27,7 +27,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: url('/media/homepage-bg.png') no-repeat center bottom;
+  background: url('./media/homepage-bg.png') no-repeat center bottom;
   background-size: cover;
   background-color: #4a1a7c;
   overflow: hidden;
@@ -97,7 +97,7 @@
   padding: 20px 0 0 0px;
   background-color: #2b1e5b;
   text-align: center;
-  background: url(/media/homp-bg2.png) no-repeat center;
+  background: url('./media/homp-bg2.png') no-repeat center;
   background-size: cover ;
   min-height: 54vh;
   justify-content: center;

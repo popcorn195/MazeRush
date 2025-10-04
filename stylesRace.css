@@ -5,7 +5,7 @@ body {
   text-align: center;
   align-items: center;
 
-  background: url(/media/race-bg2.png) no-repeat center center fixed;
+  background: url('./media/race-bg2.png') no-repeat center center fixed;
   background-size: cover;
   background-attachment: scroll;
   image-rendering: pixelated;
